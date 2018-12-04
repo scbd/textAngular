@@ -428,7 +428,9 @@ angular.module('textAngular.factories', [])
     var rsb1 = new RegExp(/<span id="selectionBoundary_\d+_\d+" class="rangySelectionBoundary">[^<>]+?<\/span>/ig);
     var rsb2 = new RegExp(/<span class="rangySelectionBoundary" id="selectionBoundary_\d+_\d+">[^<>]+?<\/span>/ig);
     var rsb3 = new RegExp(/<span id="selectionBoundary_\d+_\d+" class="rangySelectionBoundary".*?>[^<>]+?<\/span>/ig);
-
+    var rsb4 = new RegExp(/<span class="rangySelectionBoundary" id="selectionBoundary_\d+_\d+".*?>[^<>]+?<\/span>/ig);
+    var rsb5 = new RegExp(/<span id="selectionBoundary_\d+_\d+" (style="([^"]*)") class="rangySelectionBoundary".*?>[^<>]+?<\/span>/ig);
+    
     return function taSanitize(unsafe, oldsafe, ignore){
         // unsafe html should NEVER built into a DOM object via angular.element. This allows XSS to be inserted and run.
         if ( !ignore ) {
@@ -452,6 +454,8 @@ angular.module('textAngular.factories', [])
                 unsafe = unsafe.replace(rsb2, '');
                 unsafe = unsafe.replace(rsb1, '');
                 unsafe = unsafe.replace(rsb3, '');
+                unsafe = unsafe.replace(rsb4, '');
+                unsafe = unsafe.replace(rsb5, '');
             } catch (e) {
             }
         }
